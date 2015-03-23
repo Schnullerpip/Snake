@@ -1,0 +1,5 @@
+
+class Food{
+    public:
+        Food();
+;}
