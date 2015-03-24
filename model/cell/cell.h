@@ -1,8 +1,18 @@
 #ifndef CELL_H
 #define CELL_H
+
 class Cell{
-    char volume;//Inhalt der Zelle -> ist entweder NULL oder ein Charakter der ein Körperteil der Snake repräsentiert oder ein food
     public:
+        /*CONSTRUCTOR*/
+        Cell(char volume='e');
         char getVolume();
+        void setVolume(char v);
+    private:
+        char volume;
+            /* e == empty
+             * h == head
+             * t == tail
+             * f == food
+             * o == omnom -> foodInTail*/
 };
 #endif
