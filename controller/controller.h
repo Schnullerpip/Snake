@@ -18,13 +18,18 @@ class Controller{
         /*GETTERS AND SETTERS*/
         Snake getSnake();
         Field getField();
-        Food geFood();
+        Food getFood();
 
         void setField(Field f);
         void setFood(Food f);
 
 
         /*IMPORTANT GAME FUNCTIONS*/
-        void moveSnake();
+        bool moveSnake(); //returns false if snake hit a wall or its own tail
+        bool checkForCollision(Position& p); //called ba moveSnake
+        void checkForEat(); //check if head position is equal to position of current food and repositions it if snake has had another meal
+        void processInput(char newDirection); //will be called by view after input was catched
+
+
 };
 #endif
