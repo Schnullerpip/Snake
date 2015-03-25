@@ -30,6 +30,5 @@ class Controller{
         void checkForEat(); //check if head position is equal to position of current food and repositions it if snake has had another meal
         void processInput(char newDirection); //will be called by view after input was catched
 
-
 };
 #endif

@@ -28,13 +28,14 @@ void Controller::setFood(Food f){
 bool Controller::moveSnake(){
     int x=0, y=0;
     int old_x, old_y;
+    vector<Position> * tails = &(this->snake.getTails());
 
     switch(this->snake.getDirection()){
         case 'u': //up
-            y=1;
+            y=-1;
             break;
         case 'd': //down
-            y=-1;
+            y=1;
             break;
         case 'l': //left
             x=-1;
@@ -45,12 +46,17 @@ bool Controller::moveSnake(){
     }
 
     /*reorganize the entire tails vector*/
-    for(int i=0;i<this->snake.getTails().size(); ++i){
-        old_x = this->snake.getTails().at(i).getX();
-        old_y = this->snake.getTails().at(i).getY();
-        this->snake.getTails().at(i).setX(old_x+x)
-        this->snake.getTails().at(i).setY(old_y+y)
+    for(int i=*(tails).size()-1;i>0; --i){
+        /*igve each bidypart-position the values of its predecent bodypart-position - this way the entire tail follows the head*/
+        *(tails).setX(*(tails).at(i-1).getX());
+        *(tails).setY(*(tails).at(i-1).getY());
     }
+
+    /*when the entire tail has followed up to the head, then finally change the heads position*/
+    old_x = this->snake.getPositionHead().getX();
+    old_y = this->snake.getPositionHead().getY();
+    *(tails).at(i).setX(old_x+x)
+    *(tails).at(i).setY(old_y+y)
 
 }
 
@@ -59,8 +65,8 @@ bool Controller::checkForCollision(Position& p){
         return false;
     }
     vector<Position> * tmp = &(this->snake.getTails());
-    for(int i=0;i<tmp.size();++i){
-        if(p.compareTo(tmp.at(i))){
+    for(int i=1;i<*(tmp).size();++i){ //starting from first tail element (position 1) or else it would always fail
+        if(p.compareTo(*(tmp).at(i))){
             return false;
         }        
         return true;
@@ -69,7 +75,27 @@ bool Controller::checkForCollision(Position& p){
 
 void Controller::checkForEat(){
     if(this->snake.getPositionHead().compareTo(this->food.getPosition())){
+        Position nextPosition;
+        switch(this->snake.getDirection()){
+            case 'u':
+                nextPosition.setX(this->snake.getPositionHead().getX());
+                nextPosition.setY(this->snake.getPositionHead().getY()-1);
+                break;
+            case 'd':
+                nextPosition.setX(this->snake.getPositionHead().getX());
+                nextPosition.setY(this->snake.getPositionHead().getY()+1);
+                break;
+            case 'r':
+                nextPosition.setX(this->snake.getPositionHead().getX()+1);
+                nextPosition.setY(this->snake.getPositionHead().getY());
+                break;
+            case 'l':
+                nextPosition.setX(this->snake.getPositionHead().getX()-1);
+                nextPosition.setY(this->snake.getPositionHead().getY());
+                break;
+        }
         //head is on field food
+        this->snake.eatAndGrow(nextPosition);
         this->food.reposition();
     }
 }
