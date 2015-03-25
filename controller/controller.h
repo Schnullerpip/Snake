@@ -13,7 +13,7 @@ class Controller{
 
     public:
         /*CONSTRICTOR*/
-        Controller(Field f=Field);
+        Controller(Field f);
 
         /*GETTERS AND SETTERS*/
         Snake getSnake();
