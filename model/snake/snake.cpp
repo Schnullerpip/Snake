@@ -1,13 +1,13 @@
 #include "snake.h"
 
 /*CONSTRUCTOR*/
-Snake::Snake(Position p){
-    this->tails.at(this->tails.size())=p;
-    this->position_head = &(this->tails.at(this->tails.size()));
+Snake::Snake(Position head){
+    this->tails.at(0)=head;
+    this->position_head = this->tails.at(0);
     this->taillength = 0;
 }
 
-Position * Snake::getPositionHead(){
+Position Snake::getPositionHead(){
     return this->position_head;
 }
 
@@ -31,9 +31,13 @@ void Snake::incrementTailLength(){
     this->taillength++;
 }
 
-void Snake::addToTail(Position p){
+void Snake::eatAndGrow(Position p){
     incrementTailLength();
-    this->tails.at(this->tails.size()) = p;
+    this->tails.insert(this->tails.begin(), p);
+}
+
+void Snake::setDirection(char newDirection){
+    this->direction = newDirection;
 }
 
 

@@ -1,5 +1,5 @@
-#ifndef CONTROLLER_H
-#define CONTROLLER_H
+#ifndef CONTROLLER_SNAKE_H
+#define CONTROLLER_SNAKE_H
 
 #include "../model/field/field.h"
 #include "../model/food/food.h"
@@ -9,7 +9,7 @@ class Controller{
     private:
         Snake snake;
         Field field;    //one gamefield
-        Food food;      //only one food, same object can eba eaten several times no need for creating many foods that have the same attributes anyway (except for position of course, but position can be set by a setter easily instead)
+        Food food;      //only one food, same object can bea eaten several times no need for creating many foods that have the same attributes anyway (except for position of course, but position can be set by a setter easily instead)
 
     public:
         /*CONSTRICTOR*/
@@ -22,6 +22,7 @@ class Controller{
 
         void setField(Field f);
         void setFood(Food f);
+        void setSnake(Snake s);
 
 
         /*IMPORTANT GAME FUNCTIONS*/

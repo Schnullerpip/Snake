@@ -2,12 +2,11 @@
 #include <vector>
 
 
-using namespace std;
 /*CONSTRUCTOR*/
 Controller::Controller(Field f){
     Position p;
-    this->field = f;
     this->snake = Snake(p);
+    this->field = f;
     this->food = Food(p);
 }
 
@@ -28,13 +27,16 @@ void Controller::setField(Field f){ //SHOULD NEVER BE NEEDED
 void Controller::setFood(Food f){
     this->food = f;
 }
+void Controller::setSnake(Snake s){
+    this->snake = s;
+}
 
 
 /*IMPORTANT GAME FUNCTIONS*/
 bool Controller::moveSnake(){
     int x=0, y=0;
     int old_x, old_y;
-    vector<Position> tails = this->snake.getTails();
+    std::vector<Position> tails = this->snake.getTails();
 
     switch(this->snake.getDirection()){
         case 'u': //up
@@ -70,7 +72,7 @@ bool Controller::checkForCollision(Position& p){
     if((p.getX()==0) || (p.getX()==this->field.getFieldWidth()) || (p.getY()==0) || (p.getY()==this->field.getFieldHeight())){
         return false;
     }
-    vector<Position> tmp = this->snake.getTails();
+    std::vector<Position> tmp = this->snake.getTails();
     for(int i=1;i<tmp.size();++i){ //starting from first tail element (position 1) or else it would always fail
         if(p.compareTo(tmp.at(i))){
             return false;

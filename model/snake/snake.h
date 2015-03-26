@@ -6,21 +6,21 @@
 
 class Snake{
     private:
-        Position *position_head;
+        Position position_head;
         int taillength;
         std::vector<Position> tails;
         char direction;
     public:
         /*CONSTRUCTOR*/
-        Snake(Position head);
-        Position * getPositionHead();
+        Snake(Position head=Position());
+        Position getPositionHead();
         int getTailLength();
         std::vector<Position> getTails();
         char getDirection();
 
         void setPositionHead(Position p);
-        void addToTail(Position p);
+        void eatAndGrow(Position p);
         void incrementTailLength();
-
+        void setDirection(char newDirection='u');
 };
 #endif
