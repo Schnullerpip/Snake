@@ -15,6 +15,9 @@ int Field::getFieldWidth(){
 int Field::getFieldHeight(){
     return this->field_height;
 }
+int Field::getFieldSize(){
+    return this->field_height*this->field_width;
+}
 
 Cell* Field::getFieldMatrix(){
     return this->field_matrix;
@@ -22,6 +25,6 @@ Cell* Field::getFieldMatrix(){
 
 
 void Field::replaceCell(int x, int y, char newVolume){
-    this->field_matrix[this->field_width+(this->field_width*this->field_height)] = Cell(newVolume);
+    this->field_matrix[this->field_width+(this->field_width*this->field_height)].setVolume(newVolume);
 }
 
