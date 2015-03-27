@@ -9,8 +9,8 @@ Position Food::getPosition(){
     return this->pos;
 }
 
-void Food::setPosition(Position p){
-    this->pos = p;
+void Food::setPosition(Position* p){
+    this->pos = *p;
 }
 
 void Food::reposition(int fieldWidth,int fieldHeight){

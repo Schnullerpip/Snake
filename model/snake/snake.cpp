@@ -1,15 +1,15 @@
 #include "snake.h"
-#include <iostream>
 
 /*CONSTRUCTOR*/
-Snake::Snake(Position head){
-    this->tails.push_back(head);
-    this->position_head = this->tails.at(0);
+Snake::Snake(){
+    this->position_head = new Position(2, 2);
+    this->tails.push_back(*(this->position_head));
+    this->position_head = &this->tails.at(0);
     this->taillength = 1;
     this->direction = 'r';
 }
 
-Position Snake::getPositionHead(){
+Position * Snake::getPositionHead(){
     return this->position_head;
 }
 
@@ -25,7 +25,7 @@ char Snake::getDirection(){
     return this->direction;
 }
 
-void Snake::setPositionHead(Position p){
+void Snake::setPositionHead(Position *p){
     this->position_head = p;
 }
 

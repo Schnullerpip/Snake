@@ -27,7 +27,7 @@ class Controller{
 
         /*IMPORTANT GAME FUNCTIONS*/
         bool moveSnake(); //returns false if snake hit a wall or its own tail
-        bool checkForCollision(Position p); //called by moveSnake
+        bool checkForCollision(); //called by moveSnake
         void checkForEat(); //check if head position is equal to position of current food and repositions it if snake has had another meal
         void processInput(char newDirection); //will be called by view after input was catched
 

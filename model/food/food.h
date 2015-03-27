@@ -8,10 +8,10 @@ class Food{
 
     public:
         /*CONSTRUCTOR*/
-        Food(Position p=Position());
+        Food(Position p= Position());
 
         Position getPosition();
-        void setPosition(Position p);
+        void setPosition(Position* p);
         void reposition(int fieldWidth, int fieldHeight);
 
 };

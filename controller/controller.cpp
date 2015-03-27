@@ -5,8 +5,8 @@
 
 /*CONSTRUCTOR*/
 Controller::Controller(Field f){
-    Position p = Position(f.getFieldWidth()/2, f.getFieldHeight()/2);
-    this->snake.setPositionHead(p); 
+    Position *p = new Position(2, 2);
+    this->snake.setPositionHead(p);
     this->field = f;
     this->food.setPosition(p);
 }
@@ -38,6 +38,8 @@ bool Controller::moveSnake(){
     int x=0, y=0;
     int old_x, old_y;
     std::vector<Position> tails = this->snake.getTails();
+    /*This pointer will be needed a lot so for reducing the effort of calling this->snake... multiple times here it is*/
+    Position *dereferencedHead = this->snake.getPositionHead();
 
     switch(this->snake.getDirection()){
         case 'u': //up
@@ -60,18 +62,18 @@ bool Controller::moveSnake(){
         tails.at(i).setX(tails.at(i-1).getX());
         tails.at(i).setY(tails.at(i-1).getY());
     }
-
+    
     /*when the entire tail has followed up to the head, then finally change the heads position*/
-    old_x = this->snake.getPositionHead().getX();
-    old_y = this->snake.getPositionHead().getY();
+    old_x =dereferencedHead->getX();
+    old_y =dereferencedHead->getY();
     tails.at(0).setX(old_x+x);
     tails.at(0).setY(old_y+y);
+    
 
     /*now that all the bodyparts have been moved check if the head crushed against the gameframe or its own tail*/
-    if(!checkForCollision(this->snake.getPositionHead())){
+    if(!checkForCollision()){
        return false; 
     } 
-
 
     /*now reorganize the field -> or bettre the fields cells -> their volume*/
 
@@ -81,22 +83,22 @@ bool Controller::moveSnake(){
     }
 
     /*now set the correctcell to head -> h''*/
-    this->field.getFieldMatrix()[this->snake.getPositionHead().getX()+(this->snake.getPositionHead().getY()*this->field.getFieldHeight())].setVolume('h');
+    this->field.getFieldMatrix()[dereferencedHead->getX()+(dereferencedHead->getY()*this->field.getFieldWidth())].setVolume('h');
 
-    /*now give every cell that would have a tailpart a 't'*/
-    Position iter;
+    /*now give every cell that has a tailpart a 't'*/
+    Position *iter;
     for(unsigned int i=1;i<this->snake.getTails().size(); i++){
-        iter =this->snake.getTails().at(i);
-        this->field.getFieldMatrix()[(iter.getX() +(this->field.getFieldHeight() * iter.getY()))].setVolume('t');
+        iter =&(this->snake.getTails().at(i));
+        this->field.getFieldMatrix()[(iter->getX() +(this->field.getFieldHeight() * iter->getY()))].setVolume('t');
     }
-
     return true;
 }
 
 
 
 
-bool Controller::checkForCollision(Position p){
+bool Controller::checkForCollision(){
+    Position p = *(this->snake.getPositionHead());
     if((p.getX()==0) || (p.getX()==this->field.getFieldWidth()) || (p.getY()==0) || (p.getY()==this->field.getFieldHeight())){
         return false;
     }
@@ -110,24 +112,25 @@ bool Controller::checkForCollision(Position p){
 }
 
 void Controller::checkForEat(){
-    if(this->snake.getPositionHead().compareTo(this->food.getPosition())){
+    Position * dereferencedHead = this->snake.getPositionHead();
+    if(dereferencedHead->compareTo(this->food.getPosition())){
         Position nextPosition;
         switch(this->snake.getDirection()){
             case 'u':
-                nextPosition.setX(this->snake.getPositionHead().getX());
-                nextPosition.setY(this->snake.getPositionHead().getY()-1);
+                nextPosition.setX(dereferencedHead->getX());
+                nextPosition.setY(dereferencedHead->getY()-1);
                 break;
             case 'd':
-                nextPosition.setX(this->snake.getPositionHead().getX());
-                nextPosition.setY(this->snake.getPositionHead().getY()+1);
+                nextPosition.setX(dereferencedHead->getX());
+                nextPosition.setY(dereferencedHead->getY()+1);
                 break;
             case 'r':
-                nextPosition.setX(this->snake.getPositionHead().getX()+1);
-                nextPosition.setY(this->snake.getPositionHead().getY());
+                nextPosition.setX(dereferencedHead->getX()+1);
+                nextPosition.setY(dereferencedHead->getY());
                 break;
             case 'l':
-                nextPosition.setX(this->snake.getPositionHead().getX()-1);
-                nextPosition.setY(this->snake.getPositionHead().getY());
+                nextPosition.setX(dereferencedHead->getX()-1);
+                nextPosition.setY(dereferencedHead->getY());
                 break;
         }
         //head is on field food

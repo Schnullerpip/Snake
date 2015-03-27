@@ -9,8 +9,10 @@
 #define HORILINE "\u2550"
 #define VERTILINE "\u2551"
 
+#define DEBUG_SNAKE
+
 /*GETTERS AND SETTERS*/
-TUI::TUI(Controller con){
+TUI::TUI(const Controller& con){
     this->con = con;
 }
 
@@ -40,12 +42,25 @@ void TUI::printGamefield(){
             else if(o==0){std::cout << VERTILINE;}
             else if(o==this->con.getField().getFieldWidth()-1){std::cout << VERTILINE <<"\n";}
             else{
-                switch(this->con.getField().getFieldMatrix()[i].getVolume()){
+                switch(this->con.getField().getFieldMatrix()[o+i*con.getField().getFieldWidth()].getVolume()){
                     case 'e':
                         std::cout << " ";
                         break;
                     case 'h':
-                        std::cout << "H";
+                        switch(con.getSnake().getDirection()){
+                            case 'u':
+                                std::cout << "V";
+                                break;
+                            case 'd':
+                                std::cout << "A";
+                                break;
+                            case 'r':
+                                std::cout << "<";
+                                break;
+                            case 'l':
+                                std::cout << ">";
+                                break;
+                        }
                         break;
                     case 't':
                         std::cout << "O";
@@ -54,11 +69,21 @@ void TUI::printGamefield(){
                         std::cout << "F";
                         break;
                     default:
-                        std::cout << " ";
+                        std::cout << "d";
                         break;
                 }
             }
         }
     }
+
+#ifdef DEBUG_SNAKE
+Position *pu = con.getSnake().getPositionHead();
+Position p = *pu;
+std::cout << "\nposition head X: " << p.getX() << std::endl;
+std::cout << "position head Y: " << p.getY() << std::endl;
+std::cout << "position head: " << p.getY()* con.getField().getFieldWidth() + p.getX() << std::endl;
+#endif
+
+
 }
 
