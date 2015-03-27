@@ -98,7 +98,7 @@ void TUI::printGamefield(){
                         std::cout << "O";
                         break;
                     case 'f':
-                        std::cout << "F";
+                        std::cout << "%";
                         break;
                     default:
                         std::cout << "d";

@@ -8,7 +8,7 @@
 
 int main(){
 
-    unsigned int gamespeed = 1000000;
+    unsigned int gamespeed = 100000;
     Controller controller;
     TUI tui= TUI(&controller);
 
@@ -17,6 +17,7 @@ int main(){
     std::cout << "field width: " << controller.getField().getFieldWidth() << std::endl;
 
     while(controller.moveSnake()){
+        controller.checkForEat();
         tui.printGamefield();
         usleep(gamespeed);
     }

@@ -4,6 +4,7 @@
 #include "../model/field/field.h"
 #include "../model/food/food.h"
 #include "../model/snake/snake.h"
+#include <stdlib.h>
 
 class Controller{
     private:
@@ -28,6 +29,7 @@ class Controller{
         /*IMPORTANT GAME FUNCTIONS*/
         bool moveSnake(); //returns false if snake hit a wall or its own tail
         bool checkForCollision(); //called by moveSnake
+        void findNewFoodLocation();
         void checkForEat(); //check if head position is equal to position of current food and repositions it if snake has had another meal
         void processInput(char newDirection); //will be called by view after input was catched
 

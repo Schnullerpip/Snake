@@ -46,6 +46,7 @@ void Snake::incrementTailLength(){
 void Snake::eatAndGrow(Position *p){
     incrementTailLength();
     this->tails.insert(this->tails.begin(), p);
+    this->position_head = tails.at(0);
 }
 
 void Snake::setDirection(char newDirection){

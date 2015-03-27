@@ -12,7 +12,7 @@ class Food{
 
         Position* getPosition();
         void setPosition(Position* p);
-        void reposition(int fieldWidth, int fieldHeight);
+        void reposition(int new_x, int new_y);
 
 };
 #endif

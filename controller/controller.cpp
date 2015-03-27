@@ -9,6 +9,7 @@ Controller::Controller(Field f){
     this->snake.setPositionHead(p);
     this->field = f;
     this->food.setPosition(p);
+    findNewFoodLocation();
 }
 
 /*GETTERS AND SETTERS*/
@@ -82,6 +83,9 @@ bool Controller::moveSnake(){
     /*now set the correctcell to head -> 'h'*/
     this->field.replaceCell(snake.getTailAt(0)->getX(),snake.getTailAt(0)->getY(), 'h');
 
+    /*now set the correct position for the food*/
+    this->field.replaceCell(food.getPosition()->getX(), food.getPosition()->getY(), 'f');
+
     Position *iter;
     for(unsigned int i=1;i<this->snake.getTails().size(); i++){
         iter =snake.getTailAt(i);
@@ -106,8 +110,28 @@ bool Controller::checkForCollision(){
     return true;
 }
 
+
+void Controller::findNewFoodLocation(){
+    int new_x=0, new_y=0;
+    bool free;
+
+    do{
+        free = true;
+        new_x = rand() % field.getFieldWidth();
+        new_y = rand() % field.getFieldHeight();
+
+        for(unsigned int i=0;i<snake.getTails().size(); ++i){
+            if(new_x == snake.getTails()[i]->getX() || new_y == snake.getTails()[i]->getY()){
+                free = false;
+                break;
+            }
+        }
+    }while(!free);
+    this->food.reposition(new_x, new_y);
+}
+
 void Controller::checkForEat(){
-    Position * dereferencedHead = this->snake.getPositionHead();
+    Position * dereferencedHead = this->snake.getTailAt(0);
     if(dereferencedHead->compareTo(this->food.getPosition())){
         Position* nextPosition = new Position();
         switch(this->snake.getDirection()){
@@ -130,15 +154,13 @@ void Controller::checkForEat(){
         }
         //head is on field food
         this->snake.eatAndGrow(nextPosition);
-        this->food.reposition(this->field.getFieldWidth(), this->field.getFieldHeight());
+        findNewFoodLocation();
     }
 }
 
 
 void Controller::processInput(char newDirection){
-    std::cout << "before: " << snake.getDirection() << std::endl;
     this->snake.setDirection(newDirection);
-    std::cout << "after: " << snake.getDirection() << std::endl;
 }
 
 
