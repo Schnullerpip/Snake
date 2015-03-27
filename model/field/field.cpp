@@ -25,6 +25,6 @@ Cell* Field::getFieldMatrix(){
 
 
 void Field::replaceCell(int x, int y, char newVolume){
-    this->field_matrix[this->field_width+(this->field_width*this->field_height)].setVolume(newVolume);
+    this->field_matrix[x+(this->field_width*y)].setVolume(newVolume);
 }
 

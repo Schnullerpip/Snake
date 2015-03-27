@@ -1,13 +1,14 @@
 #include "controller.h" 
 #include <vector>
+#include <iostream>
 
 
 /*CONSTRUCTOR*/
 Controller::Controller(Field f){
-    Position p;
-    this->snake = Snake(p);
+    Position p = Position(f.getFieldWidth()/2, f.getFieldHeight()/2);
+    this->snake.setPositionHead(p); 
     this->field = f;
-    this->food = Food(p);
+    this->food.setPosition(p);
 }
 
 /*GETTERS AND SETTERS*/
@@ -84,7 +85,7 @@ bool Controller::moveSnake(){
 
     /*now give every cell that would have a tailpart a 't'*/
     Position iter;
-    for(int i=1;i<this->snake.getTails().size(); i++){
+    for(unsigned int i=1;i<this->snake.getTails().size(); i++){
         iter =this->snake.getTails().at(i);
         this->field.getFieldMatrix()[(iter.getX() +(this->field.getFieldHeight() * iter.getY()))].setVolume('t');
     }
@@ -100,7 +101,7 @@ bool Controller::checkForCollision(Position p){
         return false;
     }
     std::vector<Position> tmp = this->snake.getTails();
-    for(int i=3;i<tmp.size();++i){ //starting from first tail element (position 1) or else it would always fail
+    for(unsigned int i=3;i<tmp.size();++i){ //starting from first tail element (position 1) or else it would always fail
         if(p.compareTo(tmp.at(i))){
             return false;
         }        

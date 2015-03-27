@@ -9,7 +9,7 @@ class Field{
     public:
 
         /*CONSTRUCTOR*/
-        Field(int width=20, int height=30);
+        Field(int width=50, int height=20);
 
         int getFieldWidth();
         int getFieldHeight();

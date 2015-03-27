@@ -1,10 +1,12 @@
 #include "snake.h"
+#include <iostream>
 
 /*CONSTRUCTOR*/
 Snake::Snake(Position head){
-    this->tails.at(0)=head;
+    this->tails.push_back(head);
     this->position_head = this->tails.at(0);
-    this->taillength = 0;
+    this->taillength = 1;
+    this->direction = 'r';
 }
 
 Position Snake::getPositionHead(){

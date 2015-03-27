@@ -10,10 +10,10 @@ VIEW=TUI
 PACKAGES=model model/cell model/field model/food model/snake view controller
 
 TARGET=SnakeGame
-OBJECTS=controller.o cell.o field.o  food.o position.o snake.o $(TARGET).o $(VIEW).o
+OBJECTS=controller.o cell.o field.o  food.o position.o snake.o $(VIEW).o
 
 .c.o:
-	$(CC) $(CFLAGS) $(CPFLAGS) $< -c 
+	$(CC) $(CFLAGS) $(CPFLAGS) $@ -c 
 
 .PHONY: all clean
 
@@ -24,4 +24,4 @@ all:
 	$(CC) $(CFLAGS) $(OBJECTS) $(TARGET).cpp -o $(TARGET)
 
 clean:
-	rm -rf *.o 
+	rm -rf *.o $(TARGET)
