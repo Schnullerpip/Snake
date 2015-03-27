@@ -2,7 +2,7 @@
 
 #Compilervariablen
 CC=g++
-CFLAGS=-W -Wall -g
+CFLAGS=-W -Wall -g -lpthread
 LDFLAGS=-I.
 
 #Hilfsvariablen

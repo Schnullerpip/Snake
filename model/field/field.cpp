@@ -23,8 +23,11 @@ Cell* Field::getFieldMatrix(){
     return this->field_matrix;
 }
 
+Cell* Field::getFieldAt(int x, int y){
+    return &field_matrix[x+y*field_width];
+}
 
 void Field::replaceCell(int x, int y, char newVolume){
-    this->field_matrix[x+(this->field_width*y)].setVolume(newVolume);
+    this->field_matrix[x+(this->field_width*y)] = newVolume;
 }
 

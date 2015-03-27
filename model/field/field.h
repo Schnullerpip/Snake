@@ -15,6 +15,7 @@ class Field{
         int getFieldHeight();
         int getFieldSize();
         Cell * getFieldMatrix();
+        Cell * getFieldAt(int x, int y);
 
         void replaceCell(int x, int y, char newVolume);
 };

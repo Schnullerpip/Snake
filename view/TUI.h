@@ -2,22 +2,22 @@
 #define TUI_VIEW_SNAKE_H
 
 #include "../controller/controller.h"
+/*INPUT THREAD ROUTINE!*/
+void *inputThreadRoutine(void *arg);
+
+
 class TUI{
     private:
-        Controller con;
+        Controller* con;
     public:
         /*CONSTRUCTOR*/
-        explicit TUI(const Controller& con);
+        explicit TUI(Controller* con=new Controller());
 
         /*GETTERS AND SETTERS*/
-        void setController(Controller c);
-        Controller getController();
-
+        void setController(Controller *c);
+        Controller* getController();
 
         /*VIEW SPECIFIC FUNCTIONS*/
         void printGamefield();
-
-
-
 };
 #endif

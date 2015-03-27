@@ -37,8 +37,6 @@ void Controller::setSnake(Snake s){
 bool Controller::moveSnake(){
     int x=0, y=0;
     int old_x, old_y;
-    /*This pointer will be needed a lot so for reducing the effort of calling this->snake... multiple times here it is*/
-    Position *dereferencedHead = this->snake.getPositionHead();
 
     switch(this->snake.getDirection()){
         case 'u': //up
@@ -62,13 +60,12 @@ bool Controller::moveSnake(){
     }
     
     /*when the entire tail has followed up to the head, then finally change the heads position*/
-    old_x =dereferencedHead->getX();
-    old_y =dereferencedHead->getY();
+    old_x =snake.getTailAt(0)->getX();
+    old_y =snake.getTailAt(0)->getY();
 
-    std::cout << "beforex: " << snake.getTailAt(0)->getX() << std::endl;
-    std::cout << "beforey: " << snake.getTailAt(0)->getY() << std::endl;
+    //std::cout << "beforex: " << snake.getTailAt(0)->getX() << std::endl;
+    //std::cout << "beforey: " << snake.getTailAt(0)->getY() << std::endl;
     snake.setTailAt(0,old_x+x, old_y+y);
-    
 
     /*now that all the bodyparts have been moved check if the head crushed against the gameframe or its own tail*/
     if(!checkForCollision()){
@@ -82,14 +79,13 @@ bool Controller::moveSnake(){
         this->field.getFieldMatrix()[i].setVolume('e');
     }
 
-    /*now set the correctcell to head -> h''*/
-    this->field.getFieldMatrix()[dereferencedHead->getX()+(dereferencedHead->getY()*this->field.getFieldWidth())].setVolume('h');
+    /*now set the correctcell to head -> 'h'*/
+    this->field.replaceCell(snake.getTailAt(0)->getX(),snake.getTailAt(0)->getY(), 'h');
 
-    /*now give every cell that has a tailpart a 't'*/
     Position *iter;
     for(unsigned int i=1;i<this->snake.getTails().size(); i++){
         iter =snake.getTailAt(i);
-        this->field.getFieldMatrix()[(iter->getX() +(this->field.getFieldHeight() * iter->getY()))].setVolume('t');
+        this->field.replaceCell(iter->getX(),iter->getY(),'t');
     }
     return true;
 }
@@ -98,7 +94,7 @@ bool Controller::moveSnake(){
 
 
 bool Controller::checkForCollision(){
-    Position *p = this->snake.getPositionHead();
+    Position *p = this->snake.getTailAt(0);
     if((p->getX()==0) || (p->getX()==this->field.getFieldWidth()) || (p->getY()==0) || (p->getY()==this->field.getFieldHeight())){
         return false;
     }
@@ -140,7 +136,9 @@ void Controller::checkForEat(){
 
 
 void Controller::processInput(char newDirection){
+    std::cout << "before: " << snake.getDirection() << std::endl;
     this->snake.setDirection(newDirection);
+    std::cout << "after: " << snake.getDirection() << std::endl;
 }
 
 

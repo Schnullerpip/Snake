@@ -1,5 +1,6 @@
 #include "TUI.h"
 #include "iostream"
+#include <pthread.h>
 
 #define TOPLEFT "\u2554"
 #define TOPRIGHT "\u2557\n"
@@ -12,42 +13,73 @@
 #define DEBUG_SNAKE
 
 /*GETTERS AND SETTERS*/
-TUI::TUI(const Controller& con){
+TUI::TUI(Controller* con){
     this->con = con;
+
+    pthread_t inputThread;
+    if(pthread_create(&inputThread, NULL,inputThreadRoutine, (void *)con)){
+        std::cout << "unable to create inputThread..." << std::endl;
+    }
 }
 
 /*GETTERS AND SETTERS*/
-void TUI::setController(Controller con){
+void TUI::setController(Controller* con){
     this->con = con;
 }
-Controller TUI::getController(){
+Controller *TUI::getController(){
     return this->con;
+}
+
+/*INPUT THREAD ROUTINE!*/
+void *inputThreadRoutine(void *arg){
+    Controller * con = (Controller*)arg;
+    char input;
+    while(true){
+        std::cin >> input;
+        switch(input){
+            case 'w':
+                con->processInput('u');
+                break;
+            case 's':
+                con->processInput('d');
+                break;
+            case 'a':
+                con->processInput('l');
+                break;
+            case 'd':
+                con->processInput('r');
+                break;
+        }
+        std::cout << "input catched: " << input << std::endl;
+    }
+    return 0;
 }
 
 /*VIEW SPECIFIV FUNCTIONS*/
 void TUI::printGamefield(){
     std::cout << "\x1B[2J\x1B[H"; //this should clear the console
-    for(int i=0;i<this->con.getField().getFieldHeight(); ++i){
-        for(int o=0;o<this->con.getField().getFieldWidth();++o){
+    for(int i=0;i<this->con->getField().getFieldHeight(); ++i){
+        for(int o=0;o<this->con->getField().getFieldWidth();++o){
             if(i==0){
                 if(o==0){ std::cout << TOPLEFT;}
-                else if(o==this->con.getField().getFieldWidth()-1){std::cout << TOPRIGHT;}
+                else if(o==this->con->getField().getFieldWidth()-1){std::cout << TOPRIGHT;}
                 else{std::cout << HORILINE;}
             }
-            else if(i==this->con.getField().getFieldHeight()-1){
+            else if(i==this->con->getField().getFieldHeight()-1){
                     if(o==0){std::cout << BOTTOMLEFT;}
-                    else if(o==this->con.getField().getFieldWidth()-1){std::cout << BOTTOMRIGHT;}
+                    else if(o==this->con->getField().getFieldWidth()-1){std::cout << BOTTOMRIGHT;}
                     else{std::cout << HORILINE;}
             }
             else if(o==0){std::cout << VERTILINE;}
-            else if(o==this->con.getField().getFieldWidth()-1){std::cout << VERTILINE <<"\n";}
+            else if(o==this->con->getField().getFieldWidth()-1){std::cout << VERTILINE <<"\n";}
             else{
-                switch(this->con.getField().getFieldMatrix()[o+i*con.getField().getFieldWidth()].getVolume()){
+                //std::cout << con->getField().getFieldMatrix()[o+i*con->getField().getFieldWidth()].getVolume();
+                switch(this->con->getField().getFieldMatrix()[o+i*con->getField().getFieldWidth()].getVolume()){
                     case 'e':
                         std::cout << " ";
                         break;
                     case 'h':
-                        switch(con.getSnake().getDirection()){
+                        switch(con->getSnake().getDirection()){
                             case 'u':
                                 std::cout << "V";
                                 break;
@@ -75,14 +107,12 @@ void TUI::printGamefield(){
             }
         }
     }
+    std::cout << "\nInsert Direction (w,a,s,d)" << std::endl;
 
 #ifdef DEBUG_SNAKE
-Position *pu = con.getSnake().getPositionHead();
-Position p = *pu;
-std::cout << "\nposition head X: " << p.getX() << std::endl;
-std::cout << "position head Y: " << p.getY() << std::endl;
-std::cout << "position head: " << p.getY()* con.getField().getFieldWidth() + p.getX() << std::endl;
-std::cout << "adress of field: " << con.getField().getFieldMatrix() << std::endl;
+std::cout << "\nposition head X: " << con->getSnake().getTailAt(0)->getX() << std::endl;
+std::cout << "position head Y: " << con->getSnake().getTailAt(0)->getY() << std::endl;
+std::cout << "adress of field: " << con->getField().getFieldMatrix() << std::endl;
 #endif
 
 

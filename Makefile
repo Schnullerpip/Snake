@@ -2,7 +2,7 @@
 
 #Compilervariablen
 CC=g++
-CFLAGS=-W -Wall -g
+CFLAGS=-W -Wall -g 
 CPFLAGS =-I.
 
 #Hilfsvariablen
@@ -21,7 +21,7 @@ all:
 	for p in $(PACKAGES); do \
 		(cd $$p && $(MAKE) $@); \
 	done
-	$(CC) $(CFLAGS) $(OBJECTS) $(TARGET).cpp -o $(TARGET)
+	$(CC) $(CFLAGS) $(OBJECTS) $(TARGET).cpp -o $(TARGET) -lpthread
 
 clean:
 	rm -rf *.o $(TARGET)

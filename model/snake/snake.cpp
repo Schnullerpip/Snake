@@ -7,7 +7,7 @@ Snake::Snake(){
     this->tails.push_back(p);
     this->position_head = tails.at(0);
     this->taillength = 1;
-    this->direction = 'r';
+    this->direction = 'd';
 }
 
 Position * Snake::getPositionHead(){
