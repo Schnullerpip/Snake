@@ -107,12 +107,14 @@ void TUI::printGamefield(){
             }
         }
     }
-    std::cout << "\nInsert Direction (w,a,s,d)" << std::endl;
+    std::cout << "\nInsert Direction (w,a,s,d) andpress Rreturn" << std::endl;
 
 #ifdef DEBUG_SNAKE
 std::cout << "\nposition head X: " << con->getSnake().getTailAt(0)->getX() << std::endl;
 std::cout << "position head Y: " << con->getSnake().getTailAt(0)->getY() << std::endl;
-std::cout << "adress of field: " << con->getField().getFieldMatrix() << std::endl;
+std::cout << "\nposition food X: " << con->getFood().getPosition()->getX() << std::endl;
+std::cout << "position food Y: " << con->getFood().getPosition()->getY() << std::endl;
+std::cout << "Tail size: " << con->getSnake().getTails().size() << std::endl;
 #endif
 
 

@@ -2,13 +2,16 @@
 #include <vector>
 #include <iostream>
 
+#include <time.h>
+
 
 /*CONSTRUCTOR*/
 Controller::Controller(Field f){
     Position *p = new Position(2, 2);
     this->snake.setPositionHead(p);
     this->field = f;
-    this->food.setPosition(p);
+
+    srand(time(0));
     findNewFoodLocation();
 }
 
@@ -80,17 +83,18 @@ bool Controller::moveSnake(){
         this->field.getFieldMatrix()[i].setVolume('e');
     }
 
-    /*now set the correctcell to head -> 'h'*/
-    this->field.replaceCell(snake.getTailAt(0)->getX(),snake.getTailAt(0)->getY(), 'h');
-
     /*now set the correct position for the food*/
     this->field.replaceCell(food.getPosition()->getX(), food.getPosition()->getY(), 'f');
 
+    /*now set all the tails*/
     Position *iter;
     for(unsigned int i=1;i<this->snake.getTails().size(); i++){
         iter =snake.getTailAt(i);
         this->field.replaceCell(iter->getX(),iter->getY(),'t');
     }
+    /*now set the correctcell to head -> 'h'*/
+    this->field.replaceCell(snake.getTailAt(0)->getX(),snake.getTailAt(0)->getY(), 'h');
+
     return true;
 }
 
@@ -102,7 +106,7 @@ bool Controller::checkForCollision(){
     if((p->getX()==0) || (p->getX()==this->field.getFieldWidth()) || (p->getY()==0) || (p->getY()==this->field.getFieldHeight())){
         return false;
     }
-    for(unsigned int i=3;i<this->snake.getTails().size();++i){ //starting from first tail element (position 1) or else it would always fail
+    for(unsigned int i=1;i<this->snake.getTails().size();++i){ //starting from first tail element (position 1) or else it would always fail
         if(p->compareTo(this->snake.getTailAt(i))){
             return false;
         }        
@@ -117,11 +121,11 @@ void Controller::findNewFoodLocation(){
 
     do{
         free = true;
-        new_x = rand() % field.getFieldWidth();
-        new_y = rand() % field.getFieldHeight();
+        new_x = rand() % field.getFieldWidth()-2;
+        new_y = rand() % field.getFieldHeight()-2;
 
         for(unsigned int i=0;i<snake.getTails().size(); ++i){
-            if(new_x == snake.getTails()[i]->getX() || new_y == snake.getTails()[i]->getY()){
+            if(new_x == snake.getTails()[i]->getX() || new_y == snake.getTails()[i]->getY() || (new_x<=1) || (new_x>=field.getFieldWidth()) || (new_y <= 1) || (new_y >= field.getFieldHeight())){
                 free = false;
                 break;
             }
