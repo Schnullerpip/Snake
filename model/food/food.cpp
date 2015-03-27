@@ -1,16 +1,16 @@
 #include "food.h"
 #include "stdlib.h"
 
-Food::Food(Position p){
+Food::Food(Position* p){
     this->pos = p;
 }
 
-Position Food::getPosition(){
+Position* Food::getPosition(){
     return this->pos;
 }
 
 void Food::setPosition(Position* p){
-    this->pos = *p;
+    this->pos = p;
 }
 
 void Food::reposition(int fieldWidth,int fieldHeight){
@@ -19,6 +19,6 @@ void Food::reposition(int fieldWidth,int fieldHeight){
     new_x = rand() % fieldWidth;
     new_y = rand() % fieldHeight;
 
-    this->pos.setX(new_x);
-    this->pos.setY(new_y);
+    this->pos->setX(new_x);
+    this->pos->setY(new_y);
 }

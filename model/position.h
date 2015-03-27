@@ -14,6 +14,6 @@ class Position{
         void setX(int x);
         void setY(int y);
 
-        bool compareTo(Position p);
+        bool compareTo(Position *p);
 };
 #endif

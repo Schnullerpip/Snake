@@ -16,14 +16,19 @@ int main(){
     std::cout << "field height: " << controller.getField().getFieldHeight() << std::endl;
     std::cout << "field width: " << controller.getField().getFieldWidth() << std::endl;
 
-    controller.moveSnake();
     tui.printGamefield();
 
+    controller.moveSnake();
+    controller.moveSnake();
+    controller.moveSnake();
+    controller.moveSnake();
+    controller.moveSnake();
 
-    while(controller.moveSnake()){
-        tui.printGamefield();
-        usleep(gamespeed);
-    }
+
+    //while(controller.moveSnake()){
+    //    tui.printGamefield();
+    //    usleep(gamespeed);
+    //}
 
 
     std::cout << "Thanks for playing" << std::endl;

@@ -4,13 +4,13 @@
 #include "../position.h"
 class Food{
     private:
-        Position pos;
+        Position* pos;
 
     public:
         /*CONSTRUCTOR*/
-        Food(Position p= Position());
+        Food(Position* p= new Position());
 
-        Position getPosition();
+        Position* getPosition();
         void setPosition(Position* p);
         void reposition(int fieldWidth, int fieldHeight);
 

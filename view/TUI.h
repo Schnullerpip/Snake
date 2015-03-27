@@ -7,7 +7,7 @@ class TUI{
         Controller con;
     public:
         /*CONSTRUCTOR*/
-        TUI(const Controller& con);
+        explicit TUI(const Controller& con);
 
         /*GETTERS AND SETTERS*/
         void setController(Controller c);

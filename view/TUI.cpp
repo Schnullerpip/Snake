@@ -82,6 +82,7 @@ Position p = *pu;
 std::cout << "\nposition head X: " << p.getX() << std::endl;
 std::cout << "position head Y: " << p.getY() << std::endl;
 std::cout << "position head: " << p.getY()* con.getField().getFieldWidth() + p.getX() << std::endl;
+std::cout << "adress of field: " << con.getField().getFieldMatrix() << std::endl;
 #endif
 
 
