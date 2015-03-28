@@ -10,7 +10,7 @@
 #define HORILINE "\u2550"
 #define VERTILINE "\u2551"
 
-#define DEBUG_SNAKE
+//#define DEBUG_SNAKE
 
 /*GETTERS AND SETTERS*/
 TUI::TUI(Controller* con){

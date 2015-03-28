@@ -25,3 +25,4 @@ all:
 
 clean:
 	rm -rf *.o $(TARGET)
+	sudo rm /bin/snake
