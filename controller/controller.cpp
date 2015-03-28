@@ -124,8 +124,10 @@ void Controller::findNewFoodLocation(){
         new_x = rand() % field.getFieldWidth()-2;
         new_y = rand() % field.getFieldHeight()-2;
 
+        if((new_x<=1) || (new_x>=field.getFieldWidth()) || (new_y <=1) || (new_y>=field.getFieldHeight()) ){free=false;continue;}
+
         for(unsigned int i=0;i<snake.getTails().size(); ++i){
-            if(new_x == snake.getTails()[i]->getX() || new_y == snake.getTails()[i]->getY() || (new_x<=1) || (new_x>=field.getFieldWidth()) || (new_y <= 1) || (new_y >= field.getFieldHeight())){
+            if(new_x == snake.getTails()[i]->getX() && new_y == snake.getTails()[i]->getY()){
                 free = false;
                 break;
             }

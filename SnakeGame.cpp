@@ -17,13 +17,9 @@ int main(){
 //    std::cout << "field width: " << controller.getField().getFieldWidth() << std::endl;
 
     while(controller.moveSnake()){
-        std::cout << "moved snake"<< std::endl;
         controller.checkForEat();
-        std::cout << "checkedForEat"<< std::endl;
         tui.printGamefield();
-        std::cout << "printed Gamefield"<< std::endl;
         usleep(gamespeed);
-        std::cout << "finished sleeping"<< std::endl;
     }
 
 
