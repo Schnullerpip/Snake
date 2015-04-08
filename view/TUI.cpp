@@ -17,7 +17,7 @@
 #define DEBUG_SNAKE
 
 
-char getcharModifiedLinuxVersion()
+char getcharModifiedUnixVersion()
 {
     /*
       courtesy: http://stackoverflow.com/users/74660/lucas
@@ -60,7 +60,7 @@ void *inputThreadRoutine(void *arg){
     Controller * con = (Controller*)arg;
     char input;
     while(true){
-        input = getcharModifiedLinuxVersion();
+        input = getcharModifiedUnixVersion();
         switch(input){
             case 'w':
                 con->processInput('u');
