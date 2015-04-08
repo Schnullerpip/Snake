@@ -10,7 +10,7 @@
 #define HORILINE "\u2550"
 #define VERTILINE "\u2551"
 
-//#define DEBUG_SNAKE
+#define DEBUG_SNAKE
 
 /*GETTERS AND SETTERS*/
 TUI::TUI(Controller* con){
@@ -110,12 +110,12 @@ void TUI::printGamefield(){
     std::cout << "\nInsert Direction (w,a,s,d) andpress Rreturn" << std::endl;
 
 #ifdef DEBUG_SNAKE
-std::cout << "\nposition head X: " << con->getSnake().getTailAt(0)->getX() << std::endl;
-std::cout << "position head Y: " << con->getSnake().getTailAt(0)->getY() << std::endl;
-std::cout << "\nposition food X: " << con->getFood().getPosition()->getX() << std::endl;
-std::cout << "position food Y: " << con->getFood().getPosition()->getY() << std::endl;
-std::cout << "Tail size: " << con->getSnake().getTails().size() << std::endl;
+//std::cout << "\nposition head X: " << con->getSnake().getTailAt(0)->getX() << std::endl;
+//std::cout << "position head Y: " << con->getSnake().getTailAt(0)->getY() << std::endl;
+//std::cout << "\nposition food X: " << con->getFood().getPosition()->getX() << std::endl;
+//std::cout << "position food Y: " << con->getFood().getPosition()->getY() << std::endl;
 #endif
+std::cout << "SCORE: " << con->getSnake().getTails().size() << std::endl;
 
 
 }

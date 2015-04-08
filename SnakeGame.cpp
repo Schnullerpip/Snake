@@ -8,7 +8,7 @@
 
 int main(){
 
-    unsigned int gamespeed = 150000;
+    unsigned int gamespeed = 180000;
     Controller controller;
     TUI tui= TUI(&controller);
 
