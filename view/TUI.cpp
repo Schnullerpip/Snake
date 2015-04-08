@@ -2,6 +2,10 @@
 #include "iostream"
 #include <pthread.h>
 
+#include <cstdio>
+#include <termios.h>
+#include <unistd.h>
+
 #define TOPLEFT "\u2554"
 #define TOPRIGHT "\u2557\n"
 #define BOTTOMLEFT "\u255A"
@@ -11,6 +15,41 @@
 #define VERTILINE "\u2551"
 
 #define DEBUG_SNAKE
+
+
+char getcharModifiedLinuxVersion()
+{
+    /*
+      courtesy: http://stackoverflow.com/users/74660/lucas
+      http://stackoverflow.com/questions/1798511/how-to-avoid-press-enter-with-any-getchar
+    */
+
+    int c;   
+    static struct termios oldt, newt;
+
+    /*tcgetattr gets the parameters of the current terminal
+    STDIN_FILENO will tell tcgetattr that it should write the settings
+    of stdin to oldt*/
+    tcgetattr( STDIN_FILENO, &oldt);
+    /*now the settings will be copied*/
+    newt = oldt;
+
+    /*ICANON normally takes care that one line at a time will be processed
+    that means it will return if it sees a "\n" or an EOF or an EOL*/
+    newt.c_lflag &= ~(ICANON);          
+
+    /*Those new settings will be set to STDIN
+    TCSANOW tells tcsetattr to change attributes immediately. */
+    tcsetattr( STDIN_FILENO, TCSANOW, &newt);
+
+    /*This is your part:
+    I choose 'e' to end input. Notice that EOF is also turned off
+    in the non-canonical mode*/
+    c = getchar();
+    /*restore the old settings*/
+    tcsetattr( STDIN_FILENO, TCSANOW, &oldt);
+    return c;
+}
 
 /*GETTERS AND SETTERS*/
 TUI::TUI(Controller* con){
