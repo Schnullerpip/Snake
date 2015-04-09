@@ -19,11 +19,6 @@
 
 char getcharModifiedUnixVersion()
 {
-    /*
-      courtesy: http://stackoverflow.com/users/74660/lucas
-      http://stackoverflow.com/questions/1798511/how-to-avoid-press-enter-with-any-getchar
-    */
-
     int c;   
     static struct termios oldt, newt;
 
