@@ -40,7 +40,7 @@ int main(){
 
     std::cout << "Thanks for playing" << std::endl;
 
-    std::ifstream i_score ("score.txt");
+    std::ifstream i_score ("/home/.snake/score.txt");
     std::string line, contestant;
     getline(i_score, line);
     i_score.close();
@@ -48,7 +48,7 @@ int main(){
     split(line, ';', name_and_score);
 
     if((controller.getSnake().getTailLength()) > atoi(name_and_score.at(1).c_str())){
-        std::ofstream o_score ("score.txt");
+        std::ofstream o_score ("/home/.snake/score.txt");
         std::cout << "Congratulations, you broke the local record!\nInsert w,a,s,or d\n";
         std::string dummy;
         getline(std::cin,dummy);
