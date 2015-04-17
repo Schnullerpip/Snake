@@ -11,8 +11,7 @@ sudo chmod a+r /home/.snake/score.txt
 sudo chmod a+w /home/.snake/score.txt
 
 
-if [ -f /bin/snake ]
+if [ ! -f /bin/snake ]
 then
-    sudo rm /bin/snake
+    sudo ln -s ${PWD}/SnakeGame /bin/snake
 fi
-sudo ln -s ${PWD}/SnakeGame /bin/snake

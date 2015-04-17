@@ -52,7 +52,7 @@ int main(){
         std::cout << "Congratulations, you broke the local record!\nInsert w,a,s,or d\n";
         std::string dummy;
         getline(std::cin,dummy);
-        std::cout << "Before:\t" << name_and_score.at(0) << " with " << name_and_score.at(1) << "\nYour Score is: " << controller.getSnake().getTailLength() << "\n\n Please insert your Name:\n";
+        std::cout << "Previous Highscore was:\t'" << name_and_score.at(0) << "' with -->" << name_and_score.at(1) << "<--\nYour Score is: -->" << controller.getSnake().getTailLength() << "<--\n\nPlease insert your Name:\n";
 
         getline(std::cin, contestant);
         o_score << contestant << ";" << controller.getSnake().getTailLength();
