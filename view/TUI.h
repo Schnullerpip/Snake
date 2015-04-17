@@ -5,6 +5,7 @@
 /*INPUT THREAD ROUTINE!*/
 void *inputThreadRoutine(void *arg);
 
+static bool threadContinue = true;
 
 class TUI{
     private:
@@ -19,5 +20,6 @@ class TUI{
 
         /*VIEW SPECIFIC FUNCTIONS*/
         void printGamefield();
+        void endInputThread();
 };
 #endif

@@ -166,7 +166,7 @@ void Controller::checkForEat(){
 
 
 void Controller::processInput(char newDirection){
-    this->snake.setDirection(newDirection);
+        this->snake.setDirection(newDirection);
 }
 
 

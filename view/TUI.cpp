@@ -32,7 +32,7 @@ char getcharModifiedUnixVersion()
     return c;
 }
 
-/*GETTERS AND SETTERS*/
+/*CONTROLLER*/
 TUI::TUI(Controller* con){
     this->con = con;
 
@@ -54,28 +54,39 @@ Controller *TUI::getController(){
 void *inputThreadRoutine(void *arg){
     Controller * con = (Controller*)arg;
     char input;
-    while(true){
+    while(threadContinue){
         input = getcharModifiedUnixVersion();
         switch(input){
             case 'w':
-                con->processInput('u');
+                if(con->getSnake().getDirection() != 'd')
+                    con->processInput('u');
                 break;
             case 's':
-                con->processInput('d');
+                if(con->getSnake().getDirection() != 'u')
+                    con->processInput('d');
                 break;
             case 'a':
-                con->processInput('l');
+                if(con->getSnake().getDirection() != 'r')
+                    con->processInput('l');
                 break;
             case 'd':
-                con->processInput('r');
+                if(con->getSnake().getDirection() != 'l')
+                    con->processInput('r');
                 break;
         }
-        std::cout << "input catched: " << input << std::endl;
+        
+#ifdef DEBUG
+    std::cout << "input catched: " << input << std::endl;
+#endif
     }
     return 0;
 }
 
 /*VIEW SPECIFIV FUNCTIONS*/
+void TUI::endInputThread(){
+    threadContinue = false;
+}
+
 void TUI::printGamefield(){
     std::cout << "\x1B[2J\x1B[H"; //this should clear the console
     for(int i=0;i<this->con->getField().getFieldHeight(); ++i){
