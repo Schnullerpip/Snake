@@ -2,6 +2,10 @@
 #include "iostream"
 #include <pthread.h>
 
+#include <cstdio>
+#include <termios.h>
+#include <unistd.h>
+
 #define TOPLEFT "\u2554"
 #define TOPRIGHT "\u2557\n"
 #define BOTTOMLEFT "\u255A"
@@ -11,6 +15,22 @@
 #define VERTILINE "\u2551"
 
 #define DEBUG_SNAKE
+
+
+char getcharModifiedUnixVersion()
+{
+    int c;   
+    static struct termios oldt, newt;
+
+    tcgetattr( STDIN_FILENO, &oldt);
+    newt = oldt;
+
+    newt.c_lflag &= ~(ICANON);          
+    tcsetattr( STDIN_FILENO, TCSANOW, &newt);
+    c = getchar();
+    tcsetattr( STDIN_FILENO, TCSANOW, &oldt);
+    return c;
+}
 
 /*GETTERS AND SETTERS*/
 TUI::TUI(Controller* con){
@@ -35,7 +55,7 @@ void *inputThreadRoutine(void *arg){
     Controller * con = (Controller*)arg;
     char input;
     while(true){
-        std::cin >> input;
+        input = getcharModifiedUnixVersion();
         switch(input){
             case 'w':
                 con->processInput('u');
@@ -107,7 +127,7 @@ void TUI::printGamefield(){
             }
         }
     }
-    std::cout << "\nInsert Direction (w,a,s,d) andpress Rreturn" << std::endl;
+    std::cout << "\nInsert Direction (w,a,s,d)" << std::endl;
 
 #ifdef DEBUG_SNAKE
 //std::cout << "\nposition head X: " << con->getSnake().getTailAt(0)->getX() << std::endl;
