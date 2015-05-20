@@ -31,3 +31,7 @@ void Field::replaceCell(int x, int y, char newVolume){
     this->field_matrix[x+(this->field_width*y)] = newVolume;
 }
 
+void Field::cleanUp(){
+    delete this->field_matrix;
+}
+

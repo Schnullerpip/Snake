@@ -25,9 +25,9 @@ class Controller{
         Food getFood();
         lock_distributor getLockDistributor();
 
-        void setField(Field f);
-        void setFood(Food f);
-        void setSnake(Snake s);
+        void setField(Field &f);
+        void setFood(Food &f);
+        void setSnake(Snake &s);
 
         /*IMPORTANT GAME FUNCTIONS*/
         bool moveSnake(); //returns false if snake hit a wall or its own tail

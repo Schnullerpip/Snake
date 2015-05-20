@@ -29,13 +29,13 @@ lock_distributor Controller::getLockDistributor(){
     return this->lockdistributor;
 }
 
-void Controller::setField(Field f){ //SHOULD NEVER BE NEEDED
+void Controller::setField(Field &f){ //SHOULD NEVER BE NEEDED
     this->field = f;
 }
-void Controller::setFood(Food f){
+void Controller::setFood(Food &f){
     this->food = f;
 }
-void Controller::setSnake(Snake s){
+void Controller::setSnake(Snake &s){
     this->snake = s;
 }
 

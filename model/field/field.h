@@ -18,5 +18,6 @@ class Field{
         Cell * getFieldAt(int x, int y);
 
         void replaceCell(int x, int y, char newVolume);
+        void cleanUp();
 };
 #endif
