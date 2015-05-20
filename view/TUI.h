@@ -5,11 +5,11 @@
 /*INPUT THREAD ROUTINE!*/
 void *inputThreadRoutine(void *arg);
 
-static bool threadContinue = true;
 
 class TUI{
     private:
         Controller* con;
+        lock_distributor lockdistributor;
     public:
         /*CONSTRUCTOR*/
         explicit TUI(Controller* con=new Controller());

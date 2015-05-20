@@ -17,6 +17,9 @@
 #define DEBUG_SNAKE
 
 
+static bool threadContinue = true;
+
+
 char getcharModifiedUnixVersion()
 {
     int c;   
@@ -55,27 +58,25 @@ void *inputThreadRoutine(void *arg){
     Controller * con = (Controller*)arg;
     char input;
     while(threadContinue){
+        con->getLockDistributor().getLock();
         input = getcharModifiedUnixVersion();
+        con->getLockDistributor().freeLock();
         switch(input){
             case 'w':
-                if(con->getSnake().getDirection() != 'd')
-                    con->processInput('u');
+                con->processInput('u');
                 break;
             case 's':
-                if(con->getSnake().getDirection() != 'u')
-                    con->processInput('d');
+                con->processInput('d');
                 break;
             case 'a':
-                if(con->getSnake().getDirection() != 'r')
-                    con->processInput('l');
+                con->processInput('l');
                 break;
             case 'd':
-                if(con->getSnake().getDirection() != 'l')
-                    con->processInput('r');
+                con->processInput('r');
                 break;
         }
-        
-#ifdef DEBUG
+        usleep(10000);
+#ifdef DEBUG_SNAKE
     std::cout << "input catched: " << input << std::endl;
 #endif
     }

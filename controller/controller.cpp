@@ -25,6 +25,9 @@ Field Controller::getField(){
 Food Controller::getFood(){
     return this->food;
 }
+lock_distributor Controller::getLockDistributor(){
+    return this->lockdistributor;
+}
 
 void Controller::setField(Field f){ //SHOULD NEVER BE NEEDED
     this->field = f;
@@ -166,7 +169,21 @@ void Controller::checkForEat(){
 
 
 void Controller::processInput(char newDirection){
+    this->lockdistributor.getLock();
+    if(!isCompliment(newDirection))
         this->snake.setDirection(newDirection);
+    this->lockdistributor.freeLock();
+}
+
+bool Controller::isCompliment(char direction){
+    char dir = this->snake.getDirection();
+
+    if(dir == 'u' && direction == 'd')return true;
+    if(dir == 'd' && direction == 'u')return true;
+    if(dir == 'l' && direction == 'r')return true;
+    if(dir == 'r' && direction == 'l')return true;
+
+    return false;
 }
 
 
