@@ -106,9 +106,11 @@ bool Controller::moveSnake(){
 
 bool Controller::checkForCollision(){
     Position *p = this->snake.getTailAt(0);
-    if((p->getX()==0) || (p->getX()==this->field.getFieldWidth()) || (p->getY()==0) || (p->getY()==this->field.getFieldHeight())){
+    /*first check for collision with wall*/
+    if((p->getX()==0) || (p->getX()==this->field.getFieldWidth()-1) || (p->getY()==0) || (p->getY()==this->field.getFieldHeight()-1)){
         return false;
     }
+    /*now check for collision with tail*/
     for(unsigned int i=1;i<this->snake.getTails().size();++i){ //starting from first tail element (position 1) or else it would always fail
         if(p->compareTo(this->snake.getTailAt(i))){
             return false;

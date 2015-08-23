@@ -22,7 +22,7 @@ std::vector<std::string> & split(const std::string &s, char delim, std::vector<s
 
 int main(){
 
-    unsigned int gamespeed = 180000;
+    unsigned int gamespeed = 115000;
     Controller controller;
     TUI tui= TUI(&controller);
 
