@@ -16,7 +16,7 @@ sudo chmod a+w ${SNAKEPATH}/score.txt
 
 if [ ! -f /bin/snake ]
 then
-    sudo ln -s ${PWD}/SnakeGame /bin/snake
+    sudo ln -s ${PWD}/SnakeGame /usr/local/bin/snake
 fi
 echo
 echo "Installed snake! You can now play console snake by simply typing 'snake' in the console"
